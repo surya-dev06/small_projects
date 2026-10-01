@@ -1,0 +1,5 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Calculator</title><link rel="stylesheet" href="style.css"></head><body><div class="card"><h1>Calculator</h1><input id="d" readonly><div class="grid" id="k"></div></div><script>
+const d=document.getElementById('d'),k=document.getElementById('k');
+'7 8 9 / 4 5 6 * 1 2 3 - 0 . = + C'.split(' ').forEach(x=>{const b=document.createElement('button');b.textContent=x;b.onclick=()=>press(x);k.appendChild(b)});
+function press(x){if(x=='C')d.value='';else if(x=='='){try{if(!/^[\d+\-*\/.() ]+$/.test(d.value))throw 0;d.value=Function('return '+d.value)()}catch{d.value='Error'}}else{if(d.value=='Error')d.value='';d.value+=x}}
+</script></body></html>
