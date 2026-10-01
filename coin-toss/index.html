@@ -1,0 +1,3 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Coin Toss Simulator</title><link rel="stylesheet" href="style.css"></head><body><div class="card"><h1>Coin Toss Simulator</h1><div class="big" id="c">🪙</div><button style="width:100%" onclick="t()">Toss Coin</button><div style="text-align:center;margin-top:8px">Heads: <b id="h">0</b> | Tails: <b id="l">0</b></div></div><script>
+let H=0,T=0;function t(){if(Math.random()<.5){H++;c.textContent='Heads 👑'}else{T++;c.textContent='Tails 🦅'}h.textContent=H;l.textContent=T}
+</script></body></html>

@@ -1,0 +1,7 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Weather Application</title><link rel="stylesheet" href="style.css"></head><body><div class="card"><h1>Weather Application</h1><input id="c" placeholder="Enter city"><button style="width:100%" onclick="go()">Get Weather</button><div id="o" style="text-align:center;margin-top:12px"></div></div><script>
+async function go(){o.textContent='Loading...';try{
+const g=await(await fetch('https://geocoding-api.open-meteo.com/v1/search?count=1&name='+encodeURIComponent(c.value))).json();
+if(!g.results)return o.textContent='City not found';const{latitude:la,longitude:lo,name,country}=g.results[0];
+const w=(await(await fetch('https://api.open-meteo.com/v1/forecast?latitude='+la+'&longitude='+lo+'&current=temperature_2m,relative_humidity_2m,wind_speed_10m')).json()).current;
+o.innerHTML='<h2>'+name+', '+country+'</h2><div class="big">'+w.temperature_2m+'°C</div>Humidity: '+w.relative_humidity_2m+'%<br>Wind: '+w.wind_speed_10m+' km/h'}catch{o.textContent='Error fetching weather'}}
+</script></body></html>

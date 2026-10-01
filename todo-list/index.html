@@ -1,0 +1,8 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>To-Do List</title><link rel="stylesheet" href="style.css"></head><body><div class="card"><h1>To-Do List</h1><input id="t" placeholder="New task"><button onclick="add()">Add</button><ul id="l"></ul></div><script>
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+let items=JSON.parse(localStorage.getItem('todos')||'[]');
+function save(){localStorage.setItem('todos',JSON.stringify(items));render()}
+function add(){const v=t.value.trim();if(v){items.push({text:v,done:false});t.value='';save()}}
+function render(){l.innerHTML=items.map((i,n)=>'<li><span class="'+(i.done?'done':'')+'" onclick="items['+n+'].done=!items['+n+'].done;save()">'+esc(i.text)+'</span><button onclick="items.splice('+n+',1);save()">✕</button></li>').join('')}
+render();
+</script></body></html>

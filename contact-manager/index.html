@@ -1,0 +1,8 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Contact Management System</title><link rel="stylesheet" href="style.css"></head><body><div class="card"><h1>Contact Management System</h1><input id="n" placeholder="Name"><input id="p" placeholder="Phone"><input id="m" placeholder="Email"><button style="width:100%" onclick="add()">Add Contact</button>
+<input id="s" placeholder="Search..." oninput="render()"><ul id="l"></ul></div><script>
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+let c=JSON.parse(localStorage.getItem('contacts')||'[]');
+function save(){localStorage.setItem('contacts',JSON.stringify(c));render()}
+function add(){if(n.value.trim()&&p.value.trim()){c.push({n:n.value.trim(),p:p.value.trim(),m:m.value.trim()});n.value=p.value=m.value='';save()}}
+function render(){const q=s.value.toLowerCase();l.innerHTML=c.map((x,i)=>({x,i})).filter(({x})=>(x.n+x.p+x.m).toLowerCase().includes(q)).map(({x,i})=>'<li><span><b>'+esc(x.n)+'</b><br>'+esc(x.p)+' '+esc(x.m)+'</span><button onclick="c.splice('+i+',1);save()">✕</button></li>').join('')}render();
+</script></body></html>

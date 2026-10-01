@@ -1,0 +1,13 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Password Manager</title><link rel="stylesheet" href="style.css"></head><body><div class="card"><h1>Password Manager</h1><input id="mp" type="password" placeholder="Master password"><button id="ub" style="width:100%" onclick="unlock()">Unlock / Create Vault</button>
+<div id="v" hidden><input id="s" placeholder="Site"><input id="u" placeholder="Username"><input id="pw" type="password" placeholder="Password"><button style="width:100%" onclick="add()">Save Entry</button><ul id="l"></ul></div></div><script>
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+let key,salt,vault=[];const enc=new TextEncoder(),b64=b=>btoa(String.fromCharCode(...new Uint8Array(b))),unb=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function derive(p,s){const m=await crypto.subtle.importKey('raw',enc.encode(p),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt:s,iterations:250000,hash:'SHA-256'},m,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
+async function unlock(){const st=JSON.parse(localStorage.getItem('vault')||'null');
+try{if(st){salt=unb(st.s);key=await derive(mp.value,salt);vault=JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:unb(st.i)},key,unb(st.d))))}
+else{salt=crypto.getRandomValues(new Uint8Array(16));key=await derive(mp.value,salt);vault=[];await save()}
+ub.hidden=mp.hidden=true;v.hidden=false;render()}catch{alert('Wrong master password')}}
+async function save(){const iv=crypto.getRandomValues(new Uint8Array(12));const d=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,enc.encode(JSON.stringify(vault)));localStorage.setItem('vault',JSON.stringify({s:b64(salt),i:b64(iv),d:b64(d)}))}
+async function add(){if(s.value&&pw.value){vault.push({s:s.value,u:u.value,p:pw.value});s.value=u.value=pw.value='';await save();render()}}
+function render(){l.innerHTML=vault.map((x,i)=>'<li><span><b>'+esc(x.s)+'</b> '+esc(x.u)+'</span><span><button onclick="navigator.clipboard.writeText(vault['+i+'].p)">Copy</button> <button onclick="vault.splice('+i+',1);save().then(render)">✕</button></span></li>').join('')}
+</script></body></html>

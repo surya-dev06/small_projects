@@ -1,0 +1,7 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Student Grade Calculator</title><link rel="stylesheet" href="style.css"></head><body><div class="card"><h1>Student Grade Calculator</h1><input id="nm" placeholder="Student name"><div id="f"></div><button style="width:100%" onclick="calc()">Calculate</button><div class="big" id="out" style="font-size:1.1rem"></div></div><script>
+const S=['Maths','Science','English','History','Computer'];
+S.forEach(x=>f.insertAdjacentHTML('beforeend','<input type="number" min="0" max="100" placeholder="'+x+' (0-100)">'));
+function calc(){const v=[...f.querySelectorAll('input')].map(i=>+i.value);if(v.some(x=>isNaN(x)||x<0||x>100)){out.textContent='Enter valid marks (0-100)';return}
+const t=v.reduce((a,b)=>a+b,0),p=t/v.length,g=p>=90?'A+':p>=80?'A':p>=70?'B':p>=60?'C':p>=50?'D':'F';
+out.textContent=(nm.value||'Student')+': Total '+t+'/'+v.length*100+', '+p.toFixed(2)+'%, Grade '+g}
+</script></body></html>

@@ -1,0 +1,6 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Quiz Application</title><link rel="stylesheet" href="style.css"></head><body><div class="card"><h1>Quiz Application</h1><div id="q"></div><div id="o"></div></div><script>
+const Q=[{q:'Which language runs in the browser?',o:['Java','JavaScript','C++'],a:1},{q:'What does HTML stand for?',o:['HyperText Markup Language','High Text Machine Language','Home Tool Markup'],a:0},{q:'Which keyword declares a constant in JS?',o:['var','let','const'],a:2},{q:'Which framework is for Java backends?',o:['Spring Boot','React','Django'],a:0}];
+let i=0,s=0;
+function show(){if(i>=Q.length){q.textContent='Score: '+s+'/'+Q.length;o.innerHTML='<button onclick="i=0;s=0;show()">Restart</button>';return}
+q.textContent=(i+1)+'. '+Q[i].q;o.innerHTML='';Q[i].o.forEach((t,n)=>{const b=document.createElement('button');b.textContent=t;b.style.width='100%';b.onclick=()=>{if(n==Q[i].a)s++;i++;show()};o.appendChild(b)})}show();
+</script></body></html>

@@ -1,0 +1,6 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dice Rolling Game</title><link rel="stylesheet" href="style.css"></head><body><div class="card"><h1>Dice Rolling Game</h1><div class="big" id="r">🎲 🎲</div><div id="m" style="text-align:center">Roll to play against the computer</div>
+<div style="text-align:center">You: <b id="a">0</b> | Computer: <b id="b">0</b></div><button style="width:100%" onclick="roll()">Roll Dice</button></div><script>
+const f='⚀⚁⚂⚃⚄⚅',R=()=>Math.floor(Math.random()*6);let y=0,z=0;
+function roll(){const p=R(),q=R();r.textContent=f[p]+'  '+f[q];
+if(p>q){y++;m.textContent='You win!'}else if(q>p){z++;m.textContent='Computer wins!'}else m.textContent='Draw!';a.textContent=y;b.textContent=z}
+</script></body></html>

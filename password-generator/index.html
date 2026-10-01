@@ -1,0 +1,6 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Password Generator</title><link rel="stylesheet" href="style.css"></head><body><div class="card"><h1>Password Generator</h1><input id="p" readonly><label>Length: <span id="n">12</span></label><input id="len" type="range" min="6" max="32" value="12" oninput="n.textContent=this.value">
+<label><input type="checkbox" id="u" checked> Uppercase</label><label><input type="checkbox" id="d" checked> Numbers</label><label><input type="checkbox" id="s" checked> Symbols</label>
+<button onclick="gen()">Generate</button> <button onclick="navigator.clipboard.writeText(p.value)">Copy</button></div><script>
+function gen(){let c='abcdefghijklmnopqrstuvwxyz';if(u.checked)c+='ABCDEFGHIJKLMNOPQRSTUVWXYZ';if(d.checked)c+='0123456789';if(s.checked)c+='!@#$%^&*()-_=+';
+const a=crypto.getRandomValues(new Uint32Array(+len.value));p.value=[...a].map(x=>c[x%c.length]).join('')}gen();
+</script></body></html>

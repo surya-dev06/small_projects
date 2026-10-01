@@ -1,0 +1,8 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Expense Tracker</title><link rel="stylesheet" href="style.css"></head><body><div class="card"><h1>Expense Tracker</h1><input id="d" placeholder="Description"><input id="a" type="number" placeholder="Amount (₹)"><button style="width:100%" onclick="add()">Add Expense</button>
+<h3>Total: ₹<span id="t">0</span></h3><ul id="l"></ul></div><script>
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+let e=JSON.parse(localStorage.getItem('exp')||'[]');
+function save(){localStorage.setItem('exp',JSON.stringify(e));render()}
+function add(){const n=+a.value;if(d.value.trim()&&n>0){e.push({d:d.value.trim(),a:n});d.value=a.value='';save()}}
+function render(){t.textContent=e.reduce((s,x)=>s+x.a,0).toFixed(2);l.innerHTML=e.map((x,n)=>'<li><span>'+esc(x.d)+' – ₹'+x.a+'</span><button onclick="e.splice('+n+',1);save()">✕</button></li>').join('')}render();
+</script></body></html>
